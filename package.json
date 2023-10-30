@@ -1,0 +1,19 @@
+{
+  "name": "taxadmindev",
+  "version": "1.0.0",
+  "description": "blockchain based Tax administration",
+  "main": "AssetTransaction.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sandali Rajasuriya",
+  "license": "ISC",
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^1.4.1",
+    "express": "^4.18.2",
+    "web3": "^1.10.3"
+  }
+}

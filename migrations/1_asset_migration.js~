@@ -1,0 +1,23 @@
+
+
+const AssetTransactionSystem = artifacts.require("AssetTransactionSystem");
+
+/*
+module.exports = function(deployer) {
+  // Deploy the AssetTransactionSystem contract with a tax rate of 5%
+
+   const taxRate = 5; 
+  deployer.deploy(AssetTransactionSystem, taxRate);
+};
+*/
+
+
+module.exports = function (deployer, network, accounts) {
+  const taxRate = 10; // for example, 10% tax
+  const taxAdminAddress =0x690F090fEB2945EC64108caC575541F231AC9fB1 ; // replace with actual address
+
+  deployer.deploy(AssetTransactionSystem, taxRate, taxAdminAddress);
+};
+
+
+

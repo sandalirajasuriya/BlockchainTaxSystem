@@ -1,0 +1,31 @@
+const AssetTransactionSystem = artifacts.require("AssetTransactionSystem");
+
+async function main() {
+  // Get the deployed contract instance
+  const contractInstance = await AssetTransactionSystem.deployed();
+  
+  // Get accounts
+  const accounts = await web3.eth.getAccounts();
+
+  // Set the tax admin (replace with actual address if needed)
+  const taxAdmin = accounts[1];
+
+  // Register an asset
+  const result = await contractInstance.registerAsset("Car", web3.utils.toWei('1', 'ether'), { from: taxAdmin });
+  console.log("Asset Registered:", result);
+
+  // Get the contract balance (optional)
+  const contractBalance = await web3.eth.getBalance(contractInstance.address);
+  console.log("Contract Ether Balance:", web3.utils.fromWei(contractBalance, 'ether'));
+  
+  // Transfer an asset
+  const transferResult = await contractInstance.transferAsset(0, accounts[2], { from: taxAdmin });
+  console.log("Asset Transferred:", transferResult);
+}
+
+// Make sure the script exits
+main().then(() => process.exit(0)).catch(error => {
+  console.error(error);
+  process.exit(1);
+});
+

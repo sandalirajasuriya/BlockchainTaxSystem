@@ -1,0 +1,9 @@
+
+
+const AssetTransactionSystem = artifacts.require("AssetTransactionSystem");
+
+module.exports = function(deployer) {
+  // Deploy the AssetTransactionSystem contract with a tax rate of 5%
+  deployer.deploy(AssetTransactionSystem, 5);
+};
+
