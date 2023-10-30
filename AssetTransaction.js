@@ -1,6 +1,7 @@
+
 const AssetTransactionSystem = artifacts.require("AssetTransactionSystem");
 
-  module.exports = async function(callback) {
+module.exports = async function(callback) {
   try {
     // Get the deployed contract instance
     const contractInstance = await AssetTransactionSystem.deployed();
@@ -10,11 +11,12 @@ const AssetTransactionSystem = artifacts.require("AssetTransactionSystem");
 
     // Set the tax admin (replace with actual address if needed)
     const taxAdmin = accounts[0];
-    const user1 = accounts[5];
-    const assetId = 3;
+    const user1 = accounts[6];
+    const user2 = accounts[7];
+    const assetId = 0;
 
     // Register an asset
-    const result = await contractInstance.registerAsset("Jeep", web3.utils.toWei('1', 'ether'), { from: user1 });
+    const result = await contractInstance.registerAsset("phone", web3.utils.toWei('1', 'ether'), { from: user1 });
     console.log("Asset Registered:", result);
 
     // Calculate the tax for the asset
@@ -25,16 +27,8 @@ const AssetTransactionSystem = artifacts.require("AssetTransactionSystem");
     const taxAmountInEther = web3.utils.fromWei(taxAmount, 'ether');
     console.log("Tax Amount (in Ether):", taxAmountInEther);
 
-    // Send the exact tax amount to the contract
-    const taxPaymentTx = await web3.eth.sendTransaction({ from: user1, to: contractInstance.address, value: taxAmount });
-    console.log("Tax Paid:", taxPaymentTx);
-
-    // Check contract's Ether balance
-    const balance = await web3.eth.getBalance(contractInstance.address);
-    console.log("Contract Ether Balance:", web3.utils.fromWei(balance, 'ether'));
-
-    // Transfer an asset
-    const transferResult = await contractInstance.transferAsset(assetId, accounts[6], { from: user1 });
+    // Transfer an asset and pay the tax
+    const transferResult = await contractInstance.transferAsset(assetId, user2, { from: user1, value: taxAmount });
     console.log("Asset Transferred:", transferResult);
 
     callback();
